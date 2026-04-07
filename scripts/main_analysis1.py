@@ -11,25 +11,21 @@ def haversine(lat1, lon1, lat2, lon2):
     return R * 2 * atan2(sqrt(d), sqrt(1-d))
 
 def process_cell_full_stats(row, num_points=50):
-    # Parse Polygon
     coords_str = row['geometry_4326'].replace('POLYGON ((', '').replace('))', '')
     pairs = [p.split() for p in coords_str.split(', ')]
     lons, lats = [float(p[0]) for p in pairs], [float(p[1]) for p in pairs]
     
-    # 1. Force find 50 points, 50m apart
     points = []
     attempts = 0
-    while len(points) < num_points and attempts < 2000:
+    while len(points) < num_points and attempts < 1000:
         lat, lon = np.random.uniform(min(lats), max(lats)), np.random.uniform(min(lons), max(lons))
         if not points or all(haversine(lat, lon, p[0], p[1]) > 0.05 for p in points):
             points.append((lat, lon))
         attempts += 1
     
-    print(f"   -> Found {len(points)} valid points in {attempts} attempts.")
+    results = []
     if len(points) < 2: return []
 
-    results = []
-    # 2. Sequential trips (1->2, 2->3, etc.)
     for i in range(len(points) - 1):
         p1, p2 = points[i], points[i+1]
         straight_dist = haversine(p1[0], p1[1], p2[0], p2[1])
@@ -54,18 +50,21 @@ def process_cell_full_stats(row, num_points=50):
 
 def main():
     df = pd.read_csv("data/1000m.csv")
-    # Take 10 cells with roads
     test_cells = df[df["road_length_m"] > 0].head(10)
     
     all_trips = []
+    print(f"--- Starting Analysis at {datetime.now().strftime('%H:%M:%S')} ---")
+    
     for i, (_, row) in enumerate(test_cells.iterrows()):
-        print(f"[{i+1}/10] Processing Cell {row['de_grid_id']}...")
-        all_trips.extend(process_cell_full_stats(row))
+        print(f"[{i+1}/10] Processing {row['de_grid_id']}...")
+        cell_data = process_cell_full_stats(row)
+        all_trips.extend(cell_data)
+        print(f"    Added {len(cell_data)} trip results.")
 
     if all_trips:
         tdf = pd.DataFrame(all_trips)
         
-        # 3. Calculate Aggregates per Mode per Cell
+        # Aggregate to get your specific statistical columns
         final_stats = tdf.groupby(['cell_id', 'mode']).agg(
             avg_speed_kmh=('speed', 'mean'),
             median_speed_kmh=('speed', 'median'),
@@ -75,14 +74,22 @@ def main():
             std_cf_mode=('cf', 'std')
         ).reset_index()
 
-        # Merge with original data
+        # Merge with population and road length
         final = final_stats.merge(df[['de_grid_id', 'population', 'road_length_m']], 
                                 left_on='cell_id', right_on='de_grid_id')
         
-        out_file = "results/speed/advanced_stats_10_cells.csv"
+        timestamp = datetime.now().strftime('%H%M%S')
+        out_file = f"results/speed/stat_test_{timestamp}.csv"
         final.to_csv(out_file, index=False)
-        print(f"\n✓ FINISHED! Total rows: {len(final)}")
-        print(f"Output File: {out_file}")
+        
+        print("\n" + "="*30)
+        print(f"SUCCESS: Created {out_file}")
+        print(f"Total Rows in File: {len(final)}")
+        print("Preview of Headers and first 2 rows:")
+        print(final.head(2).to_string())
+        print("="*30)
+    else:
+        print("Error: No trips were recorded.")
 
 if __name__ == "__main__":
     main()
