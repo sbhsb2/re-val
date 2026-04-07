@@ -1,19 +1,13 @@
-version: '3.8'
-
 services:
   valhalla:
-    image: valhalla/valhalla:latest
-    container_name: valhalla-service
+    image: ghcr.io/gis-ops/docker-valhalla/valhalla:latest
+    container_name: valhalla
     ports:
       - "8002:8002"
     volumes:
-      - ./valhalla_tiles:/custom_files
+      - ./valhalla_tiles:/custom_valhalla_tiles
     environment:
-      - tile_urls=https://download.geofabrik.de/europe/germany/bremen-latest.osm.pbf
-    restart: unless-stopped
-
-# Usage:
-# 1. Start: docker-compose up -d
-# 2. Wait 5-10 minutes for Bremen data to download and process
-# 3. Check status: docker logs valhalla-service
-# 4. Test: python test_valhalla.py
+      - tile_extract_url=https://download.geofabrik.de/europe/germany/bremen-latest.osm.pbf
+      - build_elevation=false
+      - build_transit=false
+      - force_rebuild=false
