@@ -1,4 +1,38 @@
-results/
+
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+
+# Data files (too large for GitHub)
+data/*.csv
+data/*.pbf
+data/*.osm
+data/*.geojson
+*.csv
+*.pbf
+
+# Results
+results/
+*.html
+*.png
+
+# Docker
+valhalla_tiles/
+
+# OS
 .DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
