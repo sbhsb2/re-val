@@ -2,12 +2,14 @@ services:
   valhalla:
     image: ghcr.io/gis-ops/docker-valhalla/valhalla:latest
     container_name: valhalla
+    restart: always
     ports:
       - "8002:8002"
     volumes:
-      - ./valhalla_tiles:/custom_valhalla_tiles
+      - ./valhalla_tiles:/custom_files  # Note: The container internal path is /custom_files
     environment:
-      - tile_extract_url=https://download.geofabrik.de/europe/germany/bremen-latest.osm.pbf
+      # Use 'tile_urls' instead of 'tile_extract_url'
+      - tile_urls=https://download.geofabrik.de/europe/germany/bremen-latest.osm.pbf
       - build_elevation=false
       - build_transit=false
       - force_rebuild=false
