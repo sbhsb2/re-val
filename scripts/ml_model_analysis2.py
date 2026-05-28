@@ -827,8 +827,8 @@ def main():
     print("="*70)
     
     # File paths
-    cell_summary = "results/speed/cell_summary_500m_high_20260412.csv"
-    detailed_routes = "results/speed/detailed_routes_500m_high_20260412.csv"
+    cell_summary = "results/speed/cell_summary_1000m_high.csv"
+    detailed_routes = "results/speed/detailed_routes_1000m_high.csv"
     demand_data = "data/demand_1km_bremen.csv"
     
     # Check infrastructure data
