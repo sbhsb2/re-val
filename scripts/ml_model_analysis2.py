@@ -829,7 +829,7 @@ def main():
     # File paths
     cell_summary = "results/speed/cell_summary_500m_high_20260412.csv"
     detailed_routes = "results/speed/detailed_routes_500m_high_20260412.csv"
-    demand_data = "data/parcel_demand_by_age.csv"
+    demand_data = "data/demand_1km_bremen.csv"
     
     # Check infrastructure data
     if not os.path.exists(cell_summary) or not os.path.exists(detailed_routes):
