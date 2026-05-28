@@ -1251,7 +1251,7 @@ def main():
     
     # File paths
     cell_summary = "results/speed/cell_summary_1000m_high.csv"
-    detailed_routes = "results/speed/detailed_routes_1000m.csv"
+    detailed_routes = "results/speed/detailed_routes_1000m_high.csv"
     demand_data = "data/demand_1km_bremen.csv"
     
     # Check infrastructure data
