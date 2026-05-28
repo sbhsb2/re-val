@@ -828,7 +828,7 @@ def main():
     
     # File paths
     cell_summary = "results/speed/cell_summary_500m_high_20260412.csv"
-    detailed_routes = "results/spped/detailed_routes_500m_high_20260412.csv"
+    detailed_routes = "results/speed/detailed_routes_500m_high_20260412.csv"
     demand_data = "data/parcel_demand_by_age.csv"
     
     # Check infrastructure data
