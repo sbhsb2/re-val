@@ -692,7 +692,7 @@ def create_interactive_route_map(routes_df, cell_data_dict):
                 color='#FFD700',  # Gold color for sub-squares
                 weight=1,
                 fill=True,
-                fillColor='#FFD700',
+                fillColor='#996515',
                 fillOpacity=0.1,
                 popup=f"Sub-square ({sub['row']},{sub['col']})"
             ).add_to(m)
