@@ -689,7 +689,7 @@ def create_interactive_route_map(routes_df, cell_data_dict):
         for sub in sub_squares:
             folium.Rectangle(
                 bounds=sub['bounds'],
-                color='#FFD700',  # Gold color for sub-squares
+                color='#996515',  # Gold color for sub-squares
                 weight=1,
                 fill=True,
                 fillColor='#996515',
