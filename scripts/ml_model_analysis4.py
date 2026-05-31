@@ -1907,18 +1907,26 @@ def main():
     print("="*70)
     
     # File paths
-    df1 = "results/speed/cell_summary_1000m_high.csv"
-    df2 = "results/speed/cell_summary_1000m_medium.csv"
-    df3 = "results/speed/cell_summary_1000m_low.csv"
+    df1 = pd.read_csv("results/speed/cell_summary_1000m_high.csv")
+    df2 = pd.read_csv("results/speed/cell_summary_1000m_medium.csv")
+    df3 = pd.read_csv("results/speed/cell_summary_1000m_low.csv")
 
-    df4 = "results/detailed_routes_1000m_high.csv"
-    df5 = "results/detailed_routes_1000m_medium.csv"
-    df6 = "results/detailed_routes_1000m_low.csv"
+    dfs123 = pd.concat([df1, df2, df3], ignore_index=True)
+    dfs123 = dfs123.drop_duplicates(subset=["cell_id"])
 
-    cell_summary = pd.concat([df1, df2, df3], ignore_index=True)
-    cell_summary = cell_summary.drop_duplicates(subset=["cell id"])
-    detailed_routes = pd.concat([df4, df5, df6], ignore_index=True)
-    detailed_routes = detailed_routes.drop_duplicate(subset=["cell id"])
+    dfs123.to_csv("data/cell_summary1k.csv")
+
+    df4 = pd.read_csv("results/detailed_routes_1000m_high.csv")
+    df5 = pd.read_csv("results/detailed_routes_1000m_medium.csv")
+    df6 = pd.read_csv("results/detailed_routes_1000m_low.csv")
+
+    dfs456 = pd.concat([df4, df5, df6], ignore_index=True)
+    dfs456 = dfs456.drop_duplicates(subset=["cell_id"])
+
+    dfs456.to_csv("data/detail_route1k.csv")
+
+    cell_summary = "data/cell_summary1k.csv"
+    detailed_routes = "data/detail_route1k.csv"
     demand_data = "data/demand_for_1kmgrid_bremen.csv"
     
     # Check infrastructure data
