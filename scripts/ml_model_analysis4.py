@@ -1906,6 +1906,7 @@ def main():
     print("With Demand Prediction and Full Visualization")
     print("="*70)
     
+    '''
     # File paths
     df1 = pd.read_csv("results/speed/cell_summary_1000m_high.csv")
     df2 = pd.read_csv("results/speed/cell_summary_1000m_medium.csv")
@@ -1924,7 +1925,8 @@ def main():
     dfs456 = dfs456.drop_duplicates(subset=["cell_id"])
 
     dfs456.to_csv("data/detail_route1k.csv")
-
+    '''
+    
     cell_summary = "data/cell_summary1k.csv"
     detailed_routes = "data/detail_route1k.csv"
     demand_data = "data/demand_for_1kmgrid_bremen.csv"
