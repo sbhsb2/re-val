@@ -329,7 +329,7 @@ if __name__ == '__main__':
     print("PROCESSING TEMPORAL DEMAND DATA")
     print("="*70)
     
-    demand_dict = process_temporal_demand_CORRECTED('data/parcel_demand_by_age.csv')
+    demand_dict = process_temporal_demand_CORRECTED('data/demand_for_1kmgrid_selected_cities.csv')
     
     # 2. Visualize patterns
     print("\n" + "="*70)
